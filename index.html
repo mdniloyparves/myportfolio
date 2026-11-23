@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Md. Niloy Parves — Python/Django & Cloud Backend Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050811;
+      --surface: rgba(15, 23, 42, 0.72);
+      --surface-elevated: rgba(23, 35, 62, 0.85);
+      --border: rgba(148, 163, 184, 0.16);
+      --border-glow: rgba(56, 189, 248, 0.42);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --cyan: #38bdf8;
+      --indigo: #818cf8;
+      --emerald: #34d399;
+      --amber: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.15), transparent 36%),
+        radial-gradient(circle at 88% 18%, rgba(129, 140, 248, 0.16), transparent 38%),
+        radial-gradient(circle at 50% 90%, rgba(52, 211, 153, 0.08), transparent 42%);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 8, 17, 0.78);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      box-shadow: 0 0 16px var(--cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 86px 0 60px;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pill-live {
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      color: var(--emerald);
+    }
+
+    .pill-loc {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--cyan);
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 5vw, 3.85rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 860px;
+      margin-bottom: 20px;
+    }
+
+    .grad {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 55%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.06rem;
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 44px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.94rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      color: #040711;
+      box-shadow: 0 12px 28px -10px rgba(56, 189, 248, 0.65);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px -10px rgba(129, 140, 248, 0.75);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface-elevated);
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Metrics Strip */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+    }
+
+    .metric-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+
+    .metric-lbl {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Sections */
+    section {
+      padding: 64px 0;
+    }
+
+    .sec-head {
+      margin-bottom: 30px;
+    }
+
+    .sec-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--cyan);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(1.65rem, 3vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Cards & Grids */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-glow);
+      background: var(--surface-elevated);
+    }
+
+    .card-featured {
+      border-color: rgba(56, 189, 248, 0.36);
+      background: linear-gradient(150deg, rgba(17, 29, 54, 0.88), rgba(15, 23, 42, 0.68));
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-bottom: 16px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: rgba(148, 163, 184, 0.1);
+      color: #e2e8f0;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .ext-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .ext-link:hover {
+      text-decoration: underline;
+    }
+
+    .cert-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--amber);
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.28);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 0;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .foot-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .foot-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .foot-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .foot-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        gap: 14px;
+      }
+      .hero {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <span class="brand-mark"></span>
+        <span>MD NILOY PARVES</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#credentials">Credentials</a></li>
+        <li><a href="#services">Services</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="status-row">
+          <span class="pill pill-live">● Open to Python / Django / SQL Roles</span>
+          <span class="pill pill-loc">📍 Dhaka, Bangladesh</span>
+        </div>
+        <h1>
+          Python &amp; Django Backend Developer Building <span class="grad">Cloud-Ready Systems</span>
+        </h1>
+        <p class="hero-sub">
+          I’m Md. Niloy Parves — focused on backend web development, Django REST Framework APIs, PostgreSQL, Docker, Google Cloud (GCP), DSA, and System Design. Open to freelance projects, remote roles, and opportunities in Bangladesh.
+        </p>
+        <div class="actions">
+          <a href="https://mdniloyparves.github.io/EduMnage/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            View EduMnage Live →
+          </a>
+          <a href="https://www.linkedin.com/in/md-niloy-parves-0411a7258/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            LinkedIn Profile
+          </a>
+          <a href="https://github.com/mdniloyparves" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            GitHub
+          </a>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-box">
+            <div class="metric-val">1,260+</div>
+            <div class="metric-lbl">LinkedIn Followers</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">500+</div>
+            <div class="metric-lbl">Professional Connections</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">Python + DRF</div>
+            <div class="metric-lbl">Core Backend Stack</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">GCP + Docker</div>
+            <div class="metric-lbl">Cloud &amp; Containers</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="sec-head">
+          <div class="sec-tag">Technical Competencies</div>
+          <h2>Core Skills &amp; Architecture</h2>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Backend &amp; API Engineering</h3>
+            <p>Designing clean server-side applications, RESTful APIs, data validation, and structured workflows.</p>
+            <div class="chips">
+              <span class="chip">Python</span>
+              <span class="chip">Django</span>
+              <span class="chip">Django REST Framework</span>
+              <span class="chip">REST APIs</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Database, DSA &amp; System Design</h3>
+            <p>Strong fundamentals in relational modeling, SQL querying, problem solving, and scalable system architecture.</p>
+            <div class="chips">
+              <span class="chip">PostgreSQL</span>
+              <span class="chip">SQL</span>
+              <span class="chip">DSA</span>
+              <span class="chip">System Design</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Cloud, Containers &amp; Web UI</h3>
+            <p>Containerizing environments, exploring cloud deployment workflows, and crafting responsive web interfaces.</p>
+            <div class="chips">
+              <span class="chip">Google Cloud (GCP)</span>
+              <span class="chip">Docker</span>
+              <span class="chip">Git &amp; GitHub</span>
+              <span class="chip">HTML &amp; CSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="sec-head">
+          <div class="sec-tag">Work &amp; Publishing</div>
+          <h2>Featured Projects &amp; Platforms</h2>
+        </div>
+
+        <div class="grid-2">
+          <article class="card card-featured">
+            <span class="cert-badge">LIVE DEPLOYMENT</span>
+            <h3>EduMnage</h3>
+            <p>
+              Educational management web application hosted via GitHub Pages from the main branch with HTTPS enforced for reliable client &amp; demo viewing.
+            </p>
+            <div class="chips">
+              <span class="chip">GitHub Pages</span>
+              <span class="chip">Web App</span>
+              <span class="chip">HTTPS</span>
+            </div>
+            <a href="https://mdniloyparves.github.io/EduMnage/" target="_blank" rel="noopener noreferrer" class="ext-link">
+              Open Live Demo →
+            </a>
+          </article>
+
+          <article class="card">
+            <span class="cert-badge">TECHNICAL BLOG</span>
+            <h3>TrendSphere Blog</h3>
+            <p>
+              Personal publishing space sharing technology insights, software concepts, and ongoing learning notes.
+            </p>
+            <div class="chips">
+              <span class="chip">Technical Writing</span>
+              <span class="chip">Tech Notes</span>
+            </div>
+            <a href="https://www.linkedin.com/safety/go/?url=https%3A%2F%2Ftrendsphere00%2Eblogspot%2Ecom%2F&urlhash=8d6I&mt=fa0J4_jr8RQjjuxS96mtwWsA4RDrc6cvoX-qZ93MV2Re-eYkqBpCHkQKhDOGcF9xRHhyLzIy8aNJHBD1_BcoMTnQ3k_Faohkwl_vmX56ejEP6FIrp-BLDtXdl9WFu0N5_X0mu7jx2m4bIRnq1insIL9DfKrIUwmDXhFVy-PRdKiS3FTErNE7zkIZUFEvOQ&isSdui=true" target="_blank" rel="noopener noreferrer" class="ext-link">
+              Read on TrendSphere →
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="credentials">
+      <div class="container">
+        <div class="sec-head">
+          <div class="sec-tag">Continuous Learning</div>
+          <h2>Recent Certifications</h2>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <span class="cert-badge">CERTIFIED</span>
+            <h3>Python Django 101</h3>
+            <p>Completed online certification covering core Django application structure and web development fundamentals.</p>
+          </div>
+
+          <div class="card">
+            <span class="cert-badge">CERTIFIED</span>
+            <h3>Introduction to Artificial Intelligence</h3>
+            <p>Completed SkillUp by Simplilearn program introducing modern AI concepts and practical applications.</p>
+          </div>
+
+          <div class="card">
+            <span class="cert-badge">CERTIFIED</span>
+            <h3>Certification of SQL</h3>
+            <p>Validated foundational database querying, filtering, and relational data handling skills.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="sec-head">
+          <div class="sec-tag">How I Can Help</div>
+          <h2>Services Offered</h2>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Web &amp; Custom Software Development</h3>
+            <p>Building backend features, APIs, and responsive web applications tailored to business needs.</p>
+          </div>
+          <div class="card">
+            <h3>Information Management &amp; Technical Writing</h3>
+            <p>Organizing structured technical documentation, guides, and clear software explanations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot-wrap">
+      <div>© 2026 Md. Niloy Parves • National University, Bangladesh</div>
+      <div class="foot-links">
+        <a href="https://www.linkedin.com/in/md-niloy-parves-0411a7258/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/mdniloyparves" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://mdniloyparves.github.io/EduMnage/" target="_blank" rel="noopener noreferrer">EduMnage</a>
+        <a href="https://www.linkedin.com/safety/go/?url=https%3A%2F%2Ftrendsphere00%2Eblogspot%2Ecom%2F&urlhash=8d6I&mt=fa0J4_jr8RQjjuxS96mtwWsA4RDrc6cvoX-qZ93MV2Re-eYkqBpCHkQKhDOGcF9xRHhyLzIy8aNJHBD1_BcoMTnQ3k_Faohkwl_vmX56ejEP6FIrp-BLDtXdl9WFu0N5_X0mu7jx2m4bIRnq1insIL9DfKrIUwmDXhFVy-PRdKiS3FTErNE7zkIZUFEvOQ&isSdui=true" target="_blank" rel="noopener noreferrer">Blog</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
